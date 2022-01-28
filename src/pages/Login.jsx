@@ -12,9 +12,10 @@ function Login() {
     return true;
   };
 
-  const saveLogin = () => {
+  const saveStorageLogin = () => {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
+    localStorage.setItem('user', JSON.stringify({ email }));
   };
 
   return (
@@ -37,7 +38,7 @@ function Login() {
           data-testid="password-input"
           id="password"
           name="password"
-          type="text"
+          type="password"
           placeholder="Digite sua senha"
           value={ password }
           onChange={ ({ target }) => setPassword(target.value) }
@@ -46,7 +47,7 @@ function Login() {
       <button
         type="button"
         data-testid="login-submit-btn"
-        onClick={ saveLogin }
+        onClick={ saveStorageLogin }
         disabled={ setDisabled() }
       >
         Enter
