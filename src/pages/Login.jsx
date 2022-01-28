@@ -1,6 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const setDisabled = () => {
+    const SIX = 6;
+    if (email.includes('@') && email.includes('.com') && password.length > SIX) {
+      return false;
+    }
+    return true;
+  };
+
   return (
     <form>
       <label htmlFor="email">
@@ -11,6 +22,8 @@ function Login() {
           name="email"
           id="email"
           placeholder="Digite seu Email"
+          value={ email }
+          onChange={ ({ target }) => setEmail(target.value) }
         />
       </label>
       <label htmlFor="password">
@@ -19,13 +32,17 @@ function Login() {
           data-testid="password-input"
           id="password"
           name="password"
-          type="password"
+          type="text"
           placeholder="Digite sua senha"
+          value={ password }
+          onChange={ ({ target }) => setPassword(target.value) }
         />
       </label>
       <button
         type="button"
         data-testid="login-submit-btn"
+        // onClick={ setDisabled }
+        disabled={ setDisabled() }
       >
         Enter
       </button>
