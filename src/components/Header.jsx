@@ -1,13 +1,24 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ProfileIcon from '../images/profileIcon.svg';
 import SearchIcon from '../images/searchIcon.svg';
 
 function Header() {
   return (
     <header>
-      <img data-testid="profile-top-btn" src={ ProfileIcon } alt="iconProfile" />
+      <Link to="/profile">
+        <img
+          data-testid="profile-top-btn"
+          src={ ProfileIcon }
+          alt="iconProfile"
+        />
+      </Link>
       <h1 data-testid="page-title"> Title </h1>
-      <img data-testid="search-top-btn" src={ SearchIcon } alt="iconSearch" />
+      <img
+        data-testid="search-top-btn"
+        src={ SearchIcon }
+        alt="iconSearch"
+      />
     </header>
   );
 }

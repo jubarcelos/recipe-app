@@ -1,11 +1,12 @@
 import React from 'react';
-import HeaderBar from './pages/HeaderBar';
+import { BrowserRouter } from 'react-router-dom';
+import Profile from './pages/Profile';
 
 function App() {
   return (
-    <div>
-      <HeaderBar />
-    </div>
+    <BrowserRouter>
+      <Profile />
+    </BrowserRouter>
   );
 }
 

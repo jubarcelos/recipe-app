@@ -1,10 +1,10 @@
 import React from 'react';
 import Header from '../components/Header';
 
-function HeaderBar() {
+function Profile() {
   return (
     <Header />
   );
 }
 
-export default HeaderBar;
+export default Profile;
