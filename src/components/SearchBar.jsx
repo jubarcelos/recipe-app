@@ -21,10 +21,11 @@ function SearchBar() {
   };
 
   const searchWithFilter = async ({ location: { pathname } }) => {
-    console.log(pathname);
+    if (searchInput.length > 1 && filter === 'firstLetter') {
+      return global.alert('Your search must have only 1 (one) character');
+    }
     if (pathname === '/foods') {
       const recipes = await getFoodRecipes(filter, searchInput);
-      console.log(recipes);
       return setFoodRecipes(recipes.meals);
     }
     const recipes = await getDrinkRecipes(filter, searchInput);
@@ -84,9 +85,6 @@ function SearchBar() {
       >
         Search
       </button>
-      <h1>
-        { filter }
-      </h1>
     </div>
   );
 }

@@ -1,5 +1,3 @@
-// Tela principal de receitas de comidas: /foods;
-// Tela principal de receitas de bebidas: /drinks;
 // Tela de detalhes de uma receita de comida: /foods/{id-da-receita};
 // Tela de detalhes de uma receita de bebida: /drinks/{id-da-receita};
 // Tela de receita em progresso de comida: /foods/{id-da-receita}/in-progress;
@@ -18,6 +16,7 @@ import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import Foods from '../pages/Foods';
+import Drinks from '../pages/Drinks';
 
 function Routes() {
   return (
@@ -25,7 +24,7 @@ function Routes() {
       <Route exact path="/" component={ Login } />
       <Route exact path="/profile" component={ Profile } />
       <Route exact path="/foods" component={ Foods } />
-
+      <Route exact path="/drinks" component={ Drinks } />
     </Switch>
   );
 }
