@@ -1,6 +1,34 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
+import { foodContext, drinkContext } from '../context';
+import { getFoodRecipes, getDrinkRecipes } from '../services/getSearch';
 
 function SearchBar() {
+  const [searchInput, setSearchInput] = useState('');
+  const [filter, setFilter] = useState('');
+
+  const { setFoodRecipes } = useContext(foodContext);
+  const { setDrinkRecipes } = useContext(drinkContext);
+
+  const history = useHistory();
+
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleRadioChange = (e) => {
+    setFilter(e.target.value);
+  };
+
+  const searchWithFilter = async ({ location: { pathname } }) => {
+    if (pathname === '/foods') {
+      const recipes = await getFoodRecipes(filter, searchInput);
+      setFoodRecipes(recipes.meals);
+    }
+    const recipes = await getDrinkRecipes(filter, searchInput);
+    setDrinkRecipes(recipes.meals);
+  };
+
   return (
     <div>
       <input
@@ -8,6 +36,8 @@ function SearchBar() {
         name="search"
         data-testid="search-input"
         placeholder="Search something"
+        value={ searchInput }
+        onChange={ handleInputChange }
       />
       <div>
         <label htmlFor="ingredient">
@@ -16,6 +46,9 @@ function SearchBar() {
             name="searchFilter"
             data-testid="ingredient-search-radio"
             type="radio"
+            value="ingredient"
+            onChange={ handleRadioChange }
+
           />
           Ingredients
         </label>
@@ -25,6 +58,8 @@ function SearchBar() {
             name="searchFilter"
             data-testid="name-search-radio"
             type="radio"
+            value="name"
+            onChange={ handleRadioChange }
           />
           Name
         </label>
@@ -34,10 +69,22 @@ function SearchBar() {
             name="searchFilter"
             data-testid="first-letter-search-radio"
             type="radio"
+            value="firstLetter"
+            onChange={ handleRadioChange }
           />
           First Letter
         </label>
       </div>
+      <button
+        type="button"
+        data-testid="exec-search-btn"
+        onClick={ () => searchWithFilter(history) }
+      >
+        Search
+      </button>
+      <h1>
+        { filter }
+      </h1>
     </div>
   );
 }

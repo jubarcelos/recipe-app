@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { drinkContext } from '.';
 
-function DrinksProvider() {
+function DrinksProvider({ children }) {
+  const [drinkRecipes, setDrinkRecipes] = useState([]);
+
   return (
-    <div>
-      <h1> humm </h1>
-    </div>
+    <drinkContext.Provider value={ { drinkRecipes, setDrinkRecipes } }>
+      { children }
+    </drinkContext.Provider>
   );
 }
 
 export default DrinksProvider;
+
+DrinksProvider.propTypes = {
+  children: PropTypes.node.isRequired,
+};

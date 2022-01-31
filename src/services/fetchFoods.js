@@ -1,6 +1,6 @@
 const fetchFoods = {
   getByIngredient: (ingredient) => (
-    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i${ingredient}`)
+    fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)
       .then((response) => response.json())),
   getByName: (name) => (
     fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
