@@ -21,12 +21,14 @@ function SearchBar() {
   };
 
   const searchWithFilter = async ({ location: { pathname } }) => {
+    console.log(pathname);
     if (pathname === '/foods') {
       const recipes = await getFoodRecipes(filter, searchInput);
-      setFoodRecipes(recipes.meals);
+      console.log(recipes);
+      return setFoodRecipes(recipes.meals);
     }
     const recipes = await getDrinkRecipes(filter, searchInput);
-    setDrinkRecipes(recipes.meals);
+    return setDrinkRecipes(recipes.drinks);
   };
 
   return (
