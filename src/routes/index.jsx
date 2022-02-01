@@ -1,22 +1,22 @@
-// Tela de detalhes de uma receita de comida: /foods/{id-da-receita};
-// Tela de detalhes de uma receita de bebida: /drinks/{id-da-receita};
-// Tela de receita em progresso de comida: /foods/{id-da-receita}/in-progress;
-// Tela de receita em progresso de bebida: /drinks/{id-da-receita}/in-progress;
-// Tela de explorar: /explore;
-// Tela de explorar comidas: /explore/foods;
-// Tela de explorar bebidas: /explore/drinks;
-// Tela de explorar comidas por ingrediente: /explore/foods/ingredients;
-// Tela de explorar bebidas por ingrediente: /explore/drinks/ingredients;
-// Tela de explorar comidas por nacionalidade: /explore/foods/nationalities;
-// Tela de receitas feitas: /done-recipes;
-// Tela de receitas favoritas: /favorite-recipes.
-
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import Login from '../pages/Login';
 import Profile from '../pages/Profile';
 import Foods from '../pages/Foods';
 import Drinks from '../pages/Drinks';
+import DetailFoods from '../pages/DetailFoods';
+import DetailDrinks from '../pages/DetailDrinks';
+import DoneRecipes from '../pages/DoneRecipes';
+import DrinksExplore from '../pages/DrinksExplore';
+import FoodsExplore from '../pages/FoodsExplore';
+import DrinksIngredients from '../pages/DrinksIngredients';
+import FoodsIngredients from '../pages/FoodsIngredients';
+import DrinksNationalities from '../pages/DrinksNationalities';
+import FoodsNationalities from '../pages/FoodsNationalities';
+import Explore from '../pages/Explore';
+import FavoritesRecipes from '../pages/FavoritesRecipes';
+import ProgressFood from '../pages/ProgressFood';
+import ProgressDrinks from '../pages/ProgressDrinks';
 
 function Routes() {
   return (
@@ -25,6 +25,52 @@ function Routes() {
       <Route exact path="/profile" component={ Profile } />
       <Route exact path="/foods" component={ Foods } />
       <Route exact path="/drinks" component={ Drinks } />
+      <Route exact path="/explore" component={ Explore } />
+      <Route exact path="/explore/drinks" component={ DrinksExplore } />
+      <Route exact path="/explore/foods" component={ FoodsExplore } />
+      <Route
+        exact
+        path="/explore/foods/ingredients"
+        component={ FoodsIngredients }
+      />
+      <Route
+        exact
+        path="/explore/drinks/ingredients"
+        component={ DrinksIngredients }
+      />
+      <Route
+        exact
+        path="/explore/foods/nationalities"
+        component={ FoodsNationalities }
+      />
+      <Route
+        exact
+        path="/explore/drinks/nationalities"
+        component={ DrinksNationalities }
+      />
+      <Route exact path="/done-recipes" component={ DoneRecipes } />
+      <Route exact path="/favorite-recipe" component={ FavoritesRecipes } />
+      <Route
+        exact
+        path={ `/foods/${recipeId}` }
+        component={ DetailFoods }
+      />
+      <Route
+        exact
+        path={ `/drinks/${recipeId}` }
+        component={ DetailDrinks }
+      />
+      <Route
+        exact
+        path={ `/foods/${recipeId}/in-progress` }
+        component={ ProgressFood }
+      />
+      <Route
+        exact
+        path={ `/drinks/${recipeId}/in-progress` }
+        component={ ProgressDrinks }
+      />
+
     </Switch>
   );
 }
