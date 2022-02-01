@@ -49,7 +49,7 @@ function Routes() {
         component={ DrinksNationalities }
       />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
-      <Route exact path="/favorite-recipe" component={ FavoritesRecipes } />
+      <Route exact path="/favorite-recipes" component={ FavoritesRecipes } />
       <Route
         exact
         path="/foods/:id"

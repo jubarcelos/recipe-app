@@ -44,7 +44,6 @@ function Header({ title }) {
           || history.location.pathname === '/drinks'
           || history.location.pathname === '/explore/foods/nationalities'
           || history.location.pathname === '/explore/drinks/nationalities'
-          || history.location.pathname === '/favorite-recipe'
           ? button : null
       }
 
