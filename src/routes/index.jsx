@@ -52,22 +52,22 @@ function Routes() {
       <Route exact path="/favorite-recipe" component={ FavoritesRecipes } />
       <Route
         exact
-        path={ `/foods/${recipeId}` }
+        path="/foods/:id"
         component={ DetailFoods }
       />
       <Route
         exact
-        path={ `/drinks/${recipeId}` }
+        path="/drinks/:id"
         component={ DetailDrinks }
       />
       <Route
         exact
-        path={ `/foods/${recipeId}/in-progress` }
+        path="/foods/:id/in-progress"
         component={ ProgressFood }
       />
       <Route
         exact
-        path={ `/drinks/${recipeId}/in-progress` }
+        path="/drinks/:id/in-progress"
         component={ ProgressDrinks }
       />
 
