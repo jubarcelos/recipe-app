@@ -14,7 +14,8 @@ function Login() {
     return true;
   };
 
-  const saveStorageLogin = () => {
+  const saveStorageLogin = (event) => {
+    event.preventDefault();
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify({ email }));
@@ -48,7 +49,7 @@ function Login() {
         />
       </label>
       <button
-        type="button"
+        type="submit"
         data-testid="login-submit-btn"
         onClick={ saveStorageLogin }
         disabled={ setDisabled() }
