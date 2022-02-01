@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import { userContext } from '../context';
 
 function Login() {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { setUserEmail } = useContext(userContext);
 
   const setDisabled = () => {
     const SIX = 6;
@@ -19,6 +21,7 @@ function Login() {
     localStorage.setItem('mealsToken', '1');
     localStorage.setItem('cocktailsToken', '1');
     localStorage.setItem('user', JSON.stringify({ email }));
+    setUserEmail(email);
     history.push('/foods');
   };
 

@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+import Footer from '../components/Footer';
+import { userContext } from '../context';
 
 function Profile() {
   const history = useHistory();
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const { userEmail } = useContext(userContext);
 
   const handleClick = () => {
     history.push('/');
@@ -15,7 +17,7 @@ function Profile() {
       <h3
         data-testid="profile-email"
       >
-        {email}
+        {userEmail}
       </h3>
       <button
         data-testid="profile-done-btn"
@@ -38,6 +40,9 @@ function Profile() {
       >
         Logout
       </button>
+      <div>
+        <Footer />
+      </div>
     </div>
   );
 }
