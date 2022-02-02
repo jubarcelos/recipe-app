@@ -4,9 +4,10 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { drinkContext } from '../context';
 import Card from '../components/Card';
+import CategoryButton from '../components/CategoryButton';
 
 function Drinks() {
-  const { drinkRecipes } = useContext(drinkContext);
+  const { drinkRecipes, drinkCategories } = useContext(drinkContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -19,6 +20,13 @@ function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
+      <section>
+        {
+          drinkCategories.map((category) => (
+            <CategoryButton name={ category } key={ category } />
+          ))
+        }
+      </section>
       <Footer />
       {
         drinkRecipes.length > 1
