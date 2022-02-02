@@ -21,15 +21,30 @@ function SearchBar() {
   };
 
   const searchWithFilter = async ({ location: { pathname } }) => {
+    const ELEVEN = 11;
+    const MESSAGE = 'Sorry, we haven\'t found any recipes for these filters.';
+
     if (searchInput.length > 1 && filter === 'firstLetter') {
       return global.alert('Your search must have only 1 (one) character');
     }
     if (pathname === '/foods') {
       const recipes = await getFoodRecipes(filter, searchInput);
-      return setFoodRecipes(recipes.meals);
+      if (recipes.meals === null) {
+        return global.alert(MESSAGE);
+      }
+      const twelveRecipes = recipes.meals.filter((_meal, index) => index <= ELEVEN);
+      return setFoodRecipes(twelveRecipes);
     }
-    const recipes = await getDrinkRecipes(filter, searchInput);
-    return setDrinkRecipes(recipes.drinks);
+    try {
+      const recipes = await getDrinkRecipes(filter, searchInput);
+      if (recipes.drinks === null) {
+        return global.alert(MESSAGE);
+      }
+      const twelveRecipes = recipes.drinks.filter((_drink, index) => index <= ELEVEN);
+      return setDrinkRecipes(twelveRecipes);
+    } catch {
+      global.alert(MESSAGE);
+    }
   };
 
   return (
