@@ -25,8 +25,8 @@ function Card({ index, recipeImage, recipeName, id }) {
     <div>
       {
         pathname === '/foods'
-          ? <Link to={ `${pathname}/${id}/in-progress` }>{ card }</Link>
-          : <Link to={ `drinks/${id}/in-progress` }>{ card }</Link>
+          ? <Link to={ `${pathname}/${id}` }>{ card }</Link>
+          : <Link to={ `drinks/${id}` }>{ card }</Link>
       }
     </div>
 
