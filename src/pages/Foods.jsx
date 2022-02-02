@@ -10,7 +10,6 @@ function Foods() {
   const history = useHistory();
 
   useEffect(() => {
-    console.log(foodRecipes);
     if (foodRecipes.length === 1) {
       const foodId = foodRecipes[0].idMeal;
       history.push(`/foods/${foodId}`);
