@@ -1,12 +1,12 @@
 const getRecipeById = (pathname, id) => {
   switch (pathname) {
-  case '/food':
+  case `/foods/${id}`:
     return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json());
-  case '/drinks':
+  case `/drinks/${id}`:
     return fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
       .then((response) => response.json());
-  default: return null;
+  default: return 'oi';
   }
 };
 export default getRecipeById;
