@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import { drinkContext } from '../context';
 import Card from '../components/Card';
 
@@ -18,6 +19,7 @@ function Drinks() {
   return (
     <div>
       <Header title="Drinks" />
+      <Footer />
       {
         drinkRecipes.length > 1
         && drinkRecipes.map((drink, index) => (

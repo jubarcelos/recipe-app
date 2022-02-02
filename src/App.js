@@ -4,7 +4,6 @@ import { BrowserRouter } from 'react-router-dom';
 import Routes from './routes';
 import FoodsProvider from './context/FoodsProvider';
 import DrinksProvider from './context/DrinksProvider';
-// import UserProvider from './context/UserProvider';
 
 function App() {
   return (
