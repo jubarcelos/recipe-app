@@ -1,11 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 import shareRecipe from '../images/shareIcon.svg';
 import favoriteRecipe from '../images/whiteHeartIcon.svg';
+import getRecipeById from '../services/getRecipeById';
 
-const recipeImage = 'https://image.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?w=740';
-const recipeVideo = 'https://www.youtube.com/embed/krR4rhjR75Y';
+function DetailsCard(props) {
+  const history = useHistory();
+  const { location: { pathname } } = history;
 
-function DetailsCard() {
+  useEffect(() => {
+    const { match: { params: { id } } } = props;
+    console.log('oi');
+    getRecipeById(pathname, id);
+  }, [pathname, props]);
+
   return (
     <div>
       <img
@@ -38,13 +47,10 @@ function DetailsCard() {
 
 export default DetailsCard;
 
-// O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
-// O botão de iniciar receita deve possuir o atributo data-testid="start-recipe-btn";
-
-{/* <a href={ recipeVideo } target="blank">
-  <video
-    data-testid="video"
-    src={ recipeVideo }
-    poster={ recipeImage }
-  />
-</a> */}
+DetailsCard.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }).isRequired,
+};
