@@ -4,13 +4,13 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { foodContext } from '../context';
 import Card from '../components/Card';
-import DetailsCard from '../components/DetailsCard';
 
 function Foods() {
   const { foodRecipes } = useContext(foodContext);
   const history = useHistory();
 
   useEffect(() => {
+    console.log(foodRecipes);
     if (foodRecipes.length === 1) {
       const foodId = foodRecipes[0].idMeal;
       history.push(`/foods/${foodId}`);
@@ -20,7 +20,6 @@ function Foods() {
   return (
     <div>
       <Header title="Foods" />
-      <DetailsCard />
       <Footer />
       {
         foodRecipes.length > 1
@@ -30,6 +29,7 @@ function Foods() {
             recipeImage={ food.strMealThumb }
             recipeName={ food.strMeal }
             index={ index }
+            id={ food.idMeal }
           />
         ))
       }
