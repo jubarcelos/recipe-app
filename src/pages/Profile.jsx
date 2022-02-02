@@ -1,11 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Footer from '../components/Footer';
-import { userContext } from '../context';
+import Header from '../components/Header';
 
 function Profile() {
   const history = useHistory();
-  const { userEmail } = useContext(userContext);
+  const user = JSON.parse(localStorage.getItem('user'));
 
   const handleClick = () => {
     history.push('/');
@@ -14,10 +14,11 @@ function Profile() {
 
   return (
     <div>
+      <Header title="Profile" />
       <h3
         data-testid="profile-email"
       >
-        {userEmail}
+        {user !== null && user.email}
       </h3>
       <button
         data-testid="profile-done-btn"
