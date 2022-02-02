@@ -2,6 +2,9 @@ import React from 'react';
 import shareRecipe from '../images/shareIcon.svg';
 import favoriteRecipe from '../images/whiteHeartIcon.svg';
 
+const recipeImage = 'https://image.freepik.com/fotos-gratis/3d-rendem-de-uma-mesa-de-madeira-com-uma-imagem-defocussed-de-um-barco-em-um-lago_1048-3432.jpg?w=740';
+const recipeVideo = 'https://www.youtube.com/embed/krR4rhjR75Y';
+
 function DetailsCard() {
   return (
     <div>
@@ -21,15 +24,27 @@ function DetailsCard() {
           { favoriteRecipe }
         </button>
       </div>
+      <p data-testid="recipe-category">{ category }</p>
+      {/* <h2 data-testid="${index}-ingredient-name-and-measure"> oi </h2> */}
+      <p data-testid="instructions"> oi</p>
+      <video data-testid="video" src={ recipeVideo } controls>
+        <track kind="captions" />
+        O seu navegador não suporta o elemento
+        <code>video</code>
+      </video>
     </div>
   );
 }
 
 export default DetailsCard;
 
-// O texto da categoria deve possuir o atributo data-testid="recipe-category";
-// Os ingredientes devem possuir o atributo data-testid="${index}-ingredient-name-and-measure";
-// O texto de instruções deve possuir o atributo data-testid="instructions";
-// O vídeo, presente somente na tela de comidas, deve possuir o atributo data-testid="video";
 // O card de receitas recomendadas deve possuir o atributo data-testid="${index}-recomendation-card";
 // O botão de iniciar receita deve possuir o atributo data-testid="start-recipe-btn";
+
+{/* <a href={ recipeVideo } target="blank">
+  <video
+    data-testid="video"
+    src={ recipeVideo }
+    poster={ recipeImage }
+  />
+</a> */}

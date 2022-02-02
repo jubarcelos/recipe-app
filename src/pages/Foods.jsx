@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import { foodContext } from '../context';
 import Card from '../components/Card';
+import DetailsCard from '../components/DetailsCard';
 
 function Foods() {
   const { foodRecipes } = useContext(foodContext);
@@ -19,6 +20,7 @@ function Foods() {
   return (
     <div>
       <Header title="Foods" />
+      <DetailsCard />
       <Footer />
       {
         foodRecipes.length > 1
