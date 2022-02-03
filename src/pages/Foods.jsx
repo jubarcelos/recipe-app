@@ -2,20 +2,34 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { foodContext } from '../context';
+import { foodContext, userContext } from '../context';
 import Card from '../components/Card';
 import CategoryButton from '../components/CategoryButton';
 
 function Foods() {
-  const { foodRecipes, foodCategories } = useContext(foodContext);
+  const {
+    foodRecipes,
+    foodCategories,
+    setFoodRecipes,
+  } = useContext(foodContext);
+
+  const { search, setSearch } = useContext(userContext);
+
   const history = useHistory();
 
   useEffect(() => {
-    if (foodRecipes.length === 1) {
+    if (foodRecipes.length === 1 && search === true) {
       const foodId = foodRecipes[0].idMeal;
       history.push(`/foods/${foodId}`);
     }
-  }, [foodRecipes, history]);
+  }, [foodRecipes, history, search]);
+
+  const handleButtonsFilter = async (category) => {
+    setSearch(false);
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+    const result = await response.json();
+    setFoodRecipes(result.meals);
+  };
 
   return (
     <div>
@@ -26,14 +40,14 @@ function Foods() {
             <CategoryButton
               key={ category }
               name={ category }
+              handleButtonsFilter={ handleButtonsFilter }
             />
           ))
         }
       </section>
       <Footer />
       {
-        foodRecipes.length > 1
-        && foodRecipes.map((food, index) => (
+        foodRecipes.map((food, index) => (
           <Card
             key={ food.strMeal }
             recipeImage={ food.strMealThumb }
