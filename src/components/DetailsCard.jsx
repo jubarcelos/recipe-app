@@ -9,13 +9,13 @@ function DetailsCard() {
   const { location: { pathname } } = history;
   const { id } = useParams();
 
-  const test = async () => {
-    const datas = await getRecipeById(pathname, id);
-    console.log(datas);
-  };
   useEffect(() => {
+    const test = async () => {
+      const datas = await getRecipeById(pathname, id);
+      console.log(datas);
+    };
     test();
-  }, []);
+  }, [pathname, id]);
 
   return (
     <h1>
