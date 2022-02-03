@@ -5,7 +5,7 @@ import StartRecipe from '../components/StartRecipe';
 function DetailFoods() {
   return (
     <div>
-      <h1>detail food</h1>
+      <h1>detail foods</h1>
       <DetailsCard />
       <StartRecipe />
     </div>
