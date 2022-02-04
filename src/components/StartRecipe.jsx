@@ -14,6 +14,7 @@ function StartRecipe() {
   return (
     <div>
       <button
+        data-testid="start-recipe-btn"
         type="button"
         onClick={ () => redirectById }
       >
