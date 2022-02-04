@@ -26,7 +26,7 @@ function DrinkDetails({
           <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
         </button>
       </div>
-      <p data-testid="recipe-category">{ actualRecipe.strCategory }</p>
+      <p data-testid="recipe-category">{ actualRecipe.strAlcoholic }</p>
       <p data-testid="instructions">
         { actualRecipe.strInstructions }
       </p>
