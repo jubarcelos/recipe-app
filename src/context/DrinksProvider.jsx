@@ -28,8 +28,10 @@ function DrinksProvider({ children }) {
     getCategories();
   }, []);
 
+  const value = { drinkRecipes, setDrinkRecipes, drinkCategories, setInitialRecipes };
+
   return (
-    <drinkContext.Provider value={ { drinkRecipes, setDrinkRecipes, drinkCategories } }>
+    <drinkContext.Provider value={ value }>
       { children }
     </drinkContext.Provider>
   );

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -7,10 +7,13 @@ import Card from '../components/Card';
 import CategoryButton from '../components/CategoryButton';
 
 function Foods() {
+  const [selectedCategory, setSelectedCategory] = useState('');
+
   const {
     foodRecipes,
     foodCategories,
     setFoodRecipes,
+    setInitialRecipes,
   } = useContext(foodContext);
 
   const { search, setSearch } = useContext(userContext);
@@ -25,16 +28,33 @@ function Foods() {
   }, [foodRecipes, history, search]);
 
   const handleButtonsFilter = async (category) => {
+    setSelectedCategory(category);
     setSearch(false);
-    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
-    const result = await response.json();
-    setFoodRecipes(result.meals);
+    if (category !== selectedCategory) {
+      const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
+      const result = await response.json();
+      const ELEVEN = 11;
+      const twoelvRecipes = result.meals.filter((__, index) => index <= ELEVEN);
+      setFoodRecipes(twoelvRecipes);
+    } else {
+      setInitialRecipes();
+      setSelectedCategory('');
+    }
   };
 
   return (
     <div>
       <Header title="Foods" />
       <section>
+        <button
+          type="button"
+          onClick={ () => {
+            setInitialRecipes();
+            setSelectedCategory('');
+          } }
+        >
+          All
+        </button>
         {
           foodCategories.map((category) => (
             <CategoryButton

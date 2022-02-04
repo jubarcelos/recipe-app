@@ -1,32 +1,59 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import { drinkContext } from '../context';
+import { drinkContext, userContext } from '../context';
 import Card from '../components/Card';
 import CategoryButton from '../components/CategoryButton';
 
 function Drinks() {
-  const { drinkRecipes, drinkCategories, setDrinkRecipes } = useContext(drinkContext);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const {
+    drinkRecipes,
+    drinkCategories,
+    setDrinkRecipes,
+    setInitialRecipes,
+  } = useContext(drinkContext);
+
   const history = useHistory();
 
+  const { search, setSearch } = useContext(userContext);
+
   useEffect(() => {
-    if (drinkRecipes.length === 1) {
+    if (drinkRecipes.length === 1 && search === true) {
       const drinkId = drinkRecipes[0].idDrink;
       history.push(`/drinks/${drinkId}`);
     }
-  }, [drinkRecipes, history]);
+  }, [drinkRecipes, history, search]);
 
   const handleButtonsFilter = async (category) => {
-    const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
-    const result = await response.json();
-    setDrinkRecipes(result.drinks);
+    setSelectedCategory(category);
+    setSearch(false);
+    if (category !== selectedCategory) {
+      const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`);
+      const result = await response.json();
+      const ELEVEN = 11;
+      const twoelvRecipes = result.drinks.filter((__, index) => index <= ELEVEN);
+      setDrinkRecipes(twoelvRecipes);
+    } else {
+      setInitialRecipes();
+      setSelectedCategory('');
+    }
   };
 
   return (
     <div>
       <Header title="Drinks" />
       <section>
+        <button
+          type="button"
+          onClick={ () => {
+            setInitialRecipes();
+            setSelectedCategory('');
+          } }
+        >
+          All
+        </button>
         {
           drinkCategories.map((category) => (
             <CategoryButton

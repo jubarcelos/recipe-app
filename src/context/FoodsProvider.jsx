@@ -28,8 +28,15 @@ function FoodsProvider({ children }) {
     getCategories();
   }, []);
 
+  const value = {
+    foodRecipes,
+    setFoodRecipes,
+    foodCategories,
+    setInitialRecipes,
+  };
+
   return (
-    <foodContext.Provider value={ { foodRecipes, setFoodRecipes, foodCategories } }>
+    <foodContext.Provider value={ value }>
       { children }
     </foodContext.Provider>
   );
