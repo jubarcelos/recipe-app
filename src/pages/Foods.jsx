@@ -48,6 +48,7 @@ function Foods() {
       <section>
         <button
           type="button"
+          data-testid="All-category-filter"
           onClick={ () => {
             setInitialRecipes();
             setSelectedCategory('');
