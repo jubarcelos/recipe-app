@@ -6,9 +6,7 @@ import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 function DrinkDetails({
   actualRecipe,
   ingredients,
-  renderRecipeDetails,
-  actualRecommendation }) {
-  console.log(actualRecommendation);
+  renderRecipeDetails }) {
   return (
     <div>
       <img
@@ -44,5 +42,5 @@ DrinkDetails.propTypes = {
   actualRecipe: PropTypes.objectOf.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
-  actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

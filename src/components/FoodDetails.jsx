@@ -6,9 +6,7 @@ import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 function FoodDetails({
   actualRecipe,
   renderRecipeDetails,
-  ingredients,
-  actualRecommendation }) {
-  console.log(actualRecommendation);
+  ingredients }) {
   const cutVideoAddress = actualRecipe.strYoutube.split('watch?v=');
   const newVideoAddress = cutVideoAddress.join('embed/');
 
@@ -63,5 +61,5 @@ FoodDetails.propTypes = {
   actualRecipe: PropTypes.objectOf.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
-  actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
+  // actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
