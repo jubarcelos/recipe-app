@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-function DrinkDetails({ actualRecipe, ingredients, renderRecipeDetails }) {
+function DrinkDetails({
+  actualRecipe,
+  ingredients,
+  renderRecipeDetails,
+  actualRecommendation }) {
+  console.log(actualRecommendation);
   return (
     <div>
       <img
@@ -37,6 +42,7 @@ export default DrinkDetails;
 
 DrinkDetails.propTypes = {
   actualRecipe: PropTypes.objectOf.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
+  actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
 };

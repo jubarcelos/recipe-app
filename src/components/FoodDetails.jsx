@@ -3,7 +3,12 @@ import PropTypes from 'prop-types';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-function FoodDetails({ actualRecipe, renderRecipeDetails, ingredients }) {
+function FoodDetails({
+  actualRecipe,
+  renderRecipeDetails,
+  ingredients,
+  actualRecommendation }) {
+  console.log(actualRecommendation);
   const cutVideoAddress = actualRecipe.strYoutube.split('watch?v=');
   const newVideoAddress = cutVideoAddress.join('embed/');
 
@@ -26,12 +31,15 @@ function FoodDetails({ actualRecipe, renderRecipeDetails, ingredients }) {
           <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
         </button>
       </div>
-      <p data-testid="recipe-category">{ actualRecipe.strCategory }</p>
+      <h3 data-testid="recipe-category">{ actualRecipe.strCategory }</h3>
+      <h2>Instructions</h2>
       <p data-testid="instructions">
         { actualRecipe.strInstructions }
       </p>
+      <h2>Ingredients</h2>
       { renderRecipeDetails(ingredients) }
       <div className="iframe-container">
+        <h2>Video</h2>
         <iframe
           data-testid="video"
           width="560"
@@ -53,6 +61,7 @@ export default FoodDetails;
 
 FoodDetails.propTypes = {
   actualRecipe: PropTypes.objectOf.isRequired,
-  ingredients: PropTypes.arrayOf(PropTypes.string).isRequired,
+  ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
+  actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
