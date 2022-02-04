@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import getRecommendation from '../services/getRecommendation';
-// import { userContext } from '../context';
+import { userContext } from '../context';
 
 function Carrossel() {
-  // const [loading, setLoading] = useState(false);
-  // const [recommendations, setRecommendations] = useContext(userContext);
+  const [loading, setLoading] = useState(false);
+  const { recommendations, setRecommendations } = useContext(userContext);
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -20,38 +20,32 @@ function Carrossel() {
       setLoading(true);
     };
     recipeRecommendation();
-  }, [pathname, id]);
+  }, [pathname, id, setRecommendations]);
 
-  // const drinkRecommendationsArray = Object.entries(drinkRecommendations);
-  // const foodRecommendationsArray = Object.entries(foodRecommendations);
-
-  // const recommendationCard = (recipes) => {
-  //   recipes.map((recipe, index) => (
-  //     <div key={ index } data-testid={ `${index}-recipe-card` }>
-  //       <img
-  //         data-testid={ `${index}-card-img` }
-  //         src={ recipe.strThumbDrink }
-  //         alt="recipeImage"
-  //         width="80"
-  //       />
-  //       <p
-  //         data-testid={ `${index}-card-name` }
-  //       >
-  //         { recipe.strDrink }
-  //         será que veio?
-  //       </p>
-  //     </div>
-  //   ));
-  // };
+  const recommendationCard = (recipes) => (
+    recipes.map((recipe, index) => (
+      <div key={ index } data-testid={ `${index}-recomendation-card` }>
+        <img
+          data-testid={ `${index}-card-img` }
+          src={ recipe.strDrinkThumb ? recipe.strDrinkThumb : recipe.strMealThumb }
+          alt="recipeImage"
+          width="80"
+        />
+        <p
+          data-testid={ `${index}-card-name` }
+        >
+          { recipe.strDrink ? recipe.strDrink : recipe.strMeal }
+        </p>
+      </div>
+    ))
+  );
 
   return (
     <div>
       <h1>Carrossel</h1>
-      {/* {
-        loading && pathname === `/foods/${id}`
-          ? recommendationCard(drinkRecommendationsArray)
-          : recommendationCard(foodRecommendationsArray)
-      } */}
+      {
+        loading && recommendationCard(recommendations)
+      }
     </div>
   );
 }
