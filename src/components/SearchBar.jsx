@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-import { foodContext, drinkContext } from '../context';
+import { foodContext, drinkContext, userContext } from '../context';
 import { getFoodRecipes, getDrinkRecipes } from '../services/getSearch';
 
 function SearchBar() {
@@ -9,6 +9,7 @@ function SearchBar() {
 
   const { setFoodRecipes } = useContext(foodContext);
   const { setDrinkRecipes } = useContext(drinkContext);
+  const { setSearch } = useContext(userContext);
 
   const history = useHistory();
 
@@ -21,6 +22,8 @@ function SearchBar() {
   };
 
   const searchWithFilter = async ({ location: { pathname } }) => {
+    setFoodRecipes([]);
+    setSearch(true);
     const ELEVEN = 11;
     const MESSAGE = 'Sorry, we haven\'t found any recipes for these filters.';
 
