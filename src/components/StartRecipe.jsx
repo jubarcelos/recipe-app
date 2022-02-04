@@ -1,28 +1,50 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+// import { getInProgressRecipes, getDoneRecipes } from '../services/localStorage';
 
 function StartRecipe() {
   const history = useHistory();
-  const redirectById = () => {
-    if (history.location.pathname === '/foods') {
-      return history.push('/foods/:id/in-progress');
+  const { location: { pathname } } = history;
+  const { id } = useParams();
+
+  const redirectById = (path, iD) => {
+    if (path === `/foods/${iD}`) {
+      return history.push(`/foods/${iD}/in-progress`);
     }
-    if (history.location.pathname === '/drinks') {
-      return history.push('/drinks/:id/in-progress');
+    if (path === `/drinks/${iD}`) {
+      return history.push(`/drinks/${iD}/in-progress`);
     }
   };
-  return (
+  const startProgressButton = (iD) => (
     <div>
       <button
         style={ { position: 'fixed', bottom: '0px' } }
         data-testid="start-recipe-btn"
         type="button"
-        onClick={ () => redirectById }
+        onClick={ () => redirectById(pathname, iD) }
       >
         Start Recipe
+        {/* {
+          getInProgressRecipes().meals[iD] || getInProgressRecipes().drinks[iD]
+            ? 'Continue Recipe' : 'Start Recipe'
+
+        } */}
       </button>
+    </div>
+  );
+
+  return (
+    <div>
+      {/* {
+        getDoneRecipes().some((recipe) => recipe.id === id) ? null : (
+          startProgressButton(id)
+        )
+      } */}
+      { startProgressButton(id) }
     </div>
   );
 }
 
 export default StartRecipe;
+
+// style = { display: none };
