@@ -7,7 +7,6 @@ import DrinkDetails from './DrinkDetails';
 function DetailsCard() {
   const [actualRecipe, setActualRecipe] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  console.log(actualRecipe);
 
   const history = useHistory();
   const { location: { pathname } } = history;
@@ -23,12 +22,11 @@ function DetailsCard() {
   }, [pathname, id]);
 
   const actualRecipeArray = Object.entries(actualRecipe);
-
   const ingredients = actualRecipeArray.filter((item) => item[0]
-    .includes('strIngredient') && item[1] !== null);
+    .includes('strIngredient') && item[1] !== '' && item[1] !== null);
 
   const measure = actualRecipeArray.filter((item) => item[0]
-    .includes('strMeasure') && item[1] !== null);
+    .includes('strMeasure') && item[1] !== '' && item[1] !== null);
 
   const renderRecipeDetails = (datas) => (
     datas.map((data, index) => (
@@ -51,6 +49,7 @@ function DetailsCard() {
             actualRecipe={ actualRecipe }
             renderRecipeDetails={ renderRecipeDetails }
             ingredients={ ingredients }
+
           /> : <DrinkDetails
             actualRecipe={ actualRecipe }
             renderRecipeDetails={ renderRecipeDetails }
