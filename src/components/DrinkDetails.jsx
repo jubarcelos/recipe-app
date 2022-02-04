@@ -13,7 +13,7 @@ function DrinkDetails({
         data-testid="recipe-photo"
         src={ actualRecipe.strDrinkThumb }
         alt="recipe"
-        width="390"
+        width="350"
       />
       <div>
         <h1 data-testid="recipe-title">
@@ -31,7 +31,6 @@ function DrinkDetails({
         { actualRecipe.strInstructions }
       </p>
       { renderRecipeDetails(ingredients) }
-      {/* data-testid="${index}-recomendation-card" */}
     </div>
   );
 }
@@ -42,5 +41,4 @@ DrinkDetails.propTypes = {
   actualRecipe: PropTypes.objectOf.isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
-  // actualRecommendation: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
