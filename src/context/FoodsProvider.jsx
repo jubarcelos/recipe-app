@@ -4,9 +4,16 @@ import { foodContext } from '.';
 
 function FoodsProvider({ children }) {
   const [foodRecipes, setFoodRecipes] = useState([]);
+  // const [foodRecommendations, setFoodRecommendations] = useState([]);
+  const value = {
+    foodRecipes,
+    setFoodRecipes,
+    // foodRecommendations,
+    // setFoodRecommendations,
+  };
 
   return (
-    <foodContext.Provider value={ { foodRecipes, setFoodRecipes } }>
+    <foodContext.Provider value={ value }>
       { children }
     </foodContext.Provider>
   );

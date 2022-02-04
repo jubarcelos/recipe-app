@@ -4,9 +4,17 @@ import { drinkContext } from '.';
 
 function DrinksProvider({ children }) {
   const [drinkRecipes, setDrinkRecipes] = useState([]);
+  // const [drinkRecommendations, setDrinkRecommendations] = useState([]);
+
+  const value = {
+    drinkRecipes,
+    setDrinkRecipes,
+    // drinkRecommendations,
+    // setDrinkRecommendations,
+  };
 
   return (
-    <drinkContext.Provider value={ { drinkRecipes, setDrinkRecipes } }>
+    <drinkContext.Provider value={ value }>
       { children }
     </drinkContext.Provider>
   );
