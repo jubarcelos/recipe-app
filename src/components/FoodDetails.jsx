@@ -31,25 +31,29 @@ function FoodDetails({
     <img data-testid="favorite-btn" src={ BlackHeartIcon } alt="heart" />
   );
   const [isFavorite, setIsFavorite] = useState(false);
-  const { idDrink, strCategory, strAlcoholic, strDrink,
-    strDrinkThumb } = actualRecipe;
+  const { idMeal, strCategory, strMeal, strArea,
+    strMealThumb } = actualRecipe;
 
   useEffect(() => {
-    setIsFavorite(getLocalStorageInfo('favoriteRecipes')
-      .some((recipe) => recipe.id === id));
+    if (localStorage.getItem('favoriteRecipes')
+      && localStorage.getItem('favoriteRecipes') !== []) {
+      return setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+        .some((recipe) => recipe.id === id));
+    }
     return setIsFavorite(false);
   }, [id]);
 
   const handleFavoriteClick = () => {
     const favoriteRecipe = {
-      id: idDrink,
-      type: 'drink',
-      nationality: '',
+      id: idMeal,
+      type: 'food',
+      nationality: strArea,
       category: strCategory,
-      alcoholicOrNot: strAlcoholic,
-      name: strDrink,
-      image: strDrinkThumb,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
     };
+    console.log(favoriteRecipe);
     if (isFavorite === false) {
       appendRecipe(favoriteRecipe, 'favoriteRecipes');
       setIsFavorite(true);
@@ -84,8 +88,8 @@ function FoodDetails({
         >
           { isFavorite ? blackHeart : whiteHeart }
         </button>
-        { copiedLink && global.alert('Link copied!') }
       </div>
+      { copiedLink && <p>Link copied!</p> }
       <h3 data-testid="recipe-category">{ actualRecipe.strCategory }</h3>
       <h2>Instructions</h2>
       <p data-testid="instructions">

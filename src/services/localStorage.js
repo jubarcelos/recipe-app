@@ -1,6 +1,6 @@
 export const appendRecipe = (recipe, item) => {
   const arr = localStorage.getItem(item);
-  const favoriteRecipes = [...JSON.parse(arr), recipe];
+  const favoriteRecipes = arr ? [...JSON.parse(arr), recipe] : [recipe];
   return localStorage.setItem(item, JSON.stringify(favoriteRecipes));
 };
 

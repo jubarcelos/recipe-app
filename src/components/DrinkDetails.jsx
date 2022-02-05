@@ -34,8 +34,11 @@ function DrinkDetails({
     strDrinkThumb } = actualRecipe;
 
   useEffect(() => {
-    setIsFavorite(getLocalStorageInfo('favoriteRecipes')
-      .some((recipe) => recipe.id === id));
+    if (localStorage.getItem('favoriteRecipes')
+      && localStorage.getItem('favoriteRecipes') !== []) {
+      return setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+        .some((recipe) => recipe.id === id));
+    }
     return setIsFavorite(false);
   }, [id]);
 
@@ -75,7 +78,7 @@ function DrinkDetails({
       >
         <img data-testid="share-btn" src={ ShareIcon } alt="share" />
       </button>
-      { copiedLink && global.alert('Link copied!') }
+      { copiedLink && <p>Link copied!</p> }
       <button
         type="button"
         onClick={ () => handleFavoriteClick() }

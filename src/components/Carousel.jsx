@@ -32,7 +32,7 @@ function Carrossel() {
           width="80"
         />
         <p
-          data-testid={ `${index}-card-name` }
+          data-testid={ `${index}-recomendation-title` }
         >
           { recipe.strDrink ? recipe.strDrink : recipe.strMeal }
         </p>
