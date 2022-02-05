@@ -16,6 +16,7 @@ import Explore from '../pages/Explore';
 import FavoritesRecipes from '../pages/FavoritesRecipes';
 import ProgressFood from '../pages/ProgressFood';
 import ProgressDrinks from '../pages/ProgressDrinks';
+import NotFound from '../pages/NotFound';
 
 function Routes() {
   return (
@@ -63,6 +64,10 @@ function Routes() {
         exact
         path="/drinks/:id/in-progress"
         component={ ProgressDrinks }
+      />
+      <Route
+        path="*"
+        component={ NotFound }
       />
 
     </Switch>
