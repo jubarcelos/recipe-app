@@ -7,6 +7,7 @@ function UserProvider({ children }) {
   const value = {
     recommendations,
     setRecommendations,
+
   };
 
   return (

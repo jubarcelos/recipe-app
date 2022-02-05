@@ -23,3 +23,38 @@ export const getInProgressRecipes = () => {
   const inProgressRecipes = obj ? JSON.parse(obj) : { cocktails: {}, meals: {} };
   return inProgressRecipes;
 };
+
+// export const setLocalStorageFavorites = (recipe) => {
+//   const arr = localStorage.getItem('favoriteRecipes');
+//   const favoriteRecipes = arr ? [...JSON.parse(arr), recipe] : [recipe];
+//   localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+// };
+
+export const setLocalStorageFavorites = (recipe) => {
+  const arr = localStorage.getItem('favoriteRecipes');
+  const favoriteRecipes = [...JSON.parse(arr), recipe];
+  return localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+};
+
+export const removeLocalStorageFavorites = (recipe) => {
+  const arr = localStorage.getItem('favoriteRecipes');
+  const favoriteRecipes = arr
+    ? [...JSON.parse(arr)].filter((oldRecipes) => oldRecipes.id !== recipe.id) : [];
+
+  localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+};
+
+// export const getLocalStorageFavorites = () => {
+//   const arr = localStorage.getItem('favoriteRecipes');
+//   const favoriteRecipes = arr && JSON.parse(arr);
+//   console.log(favoriteRecipes);
+//   return favoriteRecipes;
+// };
+
+export const getLocalStorageFavorites = () => {
+  const arr = localStorage.getItem('favoriteRecipes');
+  if (arr) {
+    return JSON.parse(arr);
+  }
+  return arr;
+};

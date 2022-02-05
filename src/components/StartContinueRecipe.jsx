@@ -2,7 +2,7 @@ import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 // import { getInProgressRecipes, getDoneRecipes } from '../services/localStorage';
 
-function StartRecipe() {
+function StartContinueRecipe() {
   const history = useHistory();
   const { location: { pathname } } = history;
   const { id } = useParams();
@@ -45,4 +45,4 @@ function StartRecipe() {
   );
 }
 
-export default StartRecipe;
+export default StartContinueRecipe;

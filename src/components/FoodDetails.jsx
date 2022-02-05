@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 
@@ -7,8 +8,14 @@ function FoodDetails({
   actualRecipe,
   renderRecipeDetails,
   ingredients }) {
+  const [copiedLink, setCopiedLink] = useState('');
   const cutVideoAddress = actualRecipe.strYoutube.split('watch?v=');
   const newVideoAddress = cutVideoAddress.join('embed/');
+  const handleShareClick = async () => {
+    await copy(window.location.href);
+    console.log(copiedLink, copy);
+    return setCopiedLink('copied');
+  };
 
   return (
     <div>
@@ -22,12 +29,16 @@ function FoodDetails({
         <h1 data-testid="recipe-title">
           { actualRecipe.strMeal }
         </h1>
-        <button type="button">
+        <button
+          type="button"
+          onClick={ () => handleShareClick() }
+        >
           <img data-testid="share-btn" src={ ShareIcon } alt="share" />
         </button>
         <button type="button">
           <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
         </button>
+        { copiedLink && global.alert('Link copied!')}
       </div>
       <h3 data-testid="recipe-category">{ actualRecipe.strCategory }</h3>
       <h2>Instructions</h2>

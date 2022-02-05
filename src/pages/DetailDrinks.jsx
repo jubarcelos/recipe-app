@@ -1,6 +1,6 @@
 import React from 'react';
 import DetailsCard from '../components/DetailsCard';
-import StartRecipe from '../components/StartRecipe';
+import StartContinueRecipe from '../components/StartContinueRecipe';
 import Carousel from '../components/Carousel';
 
 function DetailDrinks() {
@@ -9,7 +9,7 @@ function DetailDrinks() {
       <h1>detail drink</h1>
       <DetailsCard />
       <Carousel />
-      <StartRecipe />
+      <StartContinueRecipe />
     </div>
   );
 }

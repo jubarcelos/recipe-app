@@ -1,18 +1,75 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
+import BlackHeartIcon from '../images/blackHeartIcon.svg';
+import {
+  setLocalStorageFavorites,
+  getLocalStorageFavorites,
+  removeLocalStorageFavorites,
+} from '../services/localStorage';
 
 function DrinkDetails({
   actualRecipe,
   ingredients,
   renderRecipeDetails }) {
+  const { id } = useParams();
   const [copiedLink, setCopiedLink] = useState('');
+  // const clearRecipe = {
+  //   id: '',
+  //   type: '',
+  //   nationality: '',
+  //   category: '',
+  //   alcoholicOrNot: '',
+  //   name: '',
+  //   image: '',
+  // };
+
+  const whiteHeart = (
+    <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
+  );
+  const blackHeart = (
+    <img data-testid="favorite-btn" src={ BlackHeartIcon } alt="heart" />
+  );
   const handleShareClick = async () => {
     await copy(window.location.href);
-    console.log(copiedLink, copy);
     return setCopiedLink('copied');
+  };
+
+  const [isFavorite, setIsFavorite] = useState();
+  const { idDrink, strCategory, strAlcoholic, strDrink,
+    strDrinkThumb } = actualRecipe;
+  const [favoriteRecipe, setFavoriteRecipe] = useState();
+  const setFavoriteRecipesInfo = () => (
+    setFavoriteRecipe({
+      id: idDrink,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    })
+  );
+
+  useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')
+      && localStorage.getItem('favoriteRecipes') !== []) {
+      return setIsFavorite(getLocalStorageFavorites().some((recipe) => recipe.id === id));
+    }
+    return setIsFavorite(false);
+  }, [id]);
+
+  const handleFavoriteClick = () => {
+    setFavoriteRecipesInfo();
+    if (isFavorite === false) {
+      setLocalStorageFavorites(favoriteRecipe);
+      return setIsFavorite(true);
+    }
+    removeLocalStorageFavorites(favoriteRecipe);
+    setIsFavorite(false);
   };
 
   return (
@@ -23,21 +80,22 @@ function DrinkDetails({
         alt="recipe"
         width="350"
       />
-      <div>
-        <h1 data-testid="recipe-title">
-          { actualRecipe.strDrink }
-        </h1>
-        <button
-          type="button"
-          onClick={ () => handleShareClick() }
-        >
-          <img data-testid="share-btn" src={ ShareIcon } alt="share" />
-        </button>
-        <button type="button">
-          <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
-        </button>
-        { copiedLink && global.alert('Link copied!')}
-      </div>
+      <h1 data-testid="recipe-title">
+        { actualRecipe.strDrink }
+      </h1>
+      <button
+        type="button"
+        onClick={ () => handleShareClick() }
+      >
+        <img data-testid="share-btn" src={ ShareIcon } alt="share" />
+      </button>
+      { copiedLink && global.alert('Link copied!') }
+      <button
+        type="button"
+        onClick={ () => handleFavoriteClick() }
+      >
+        { isFavorite ? blackHeart : whiteHeart }
+      </button>
       <p data-testid="recipe-category">{ actualRecipe.strAlcoholic }</p>
       <p data-testid="instructions">
         { actualRecipe.strInstructions }
@@ -50,7 +108,7 @@ function DrinkDetails({
 export default DrinkDetails;
 
 DrinkDetails.propTypes = {
-  actualRecipe: PropTypes.objectOf.isRequired,
+  actualRecipe: PropTypes.objectOf(PropTypes.string).isRequired,
   ingredients: PropTypes.arrayOf(PropTypes.array).isRequired,
   renderRecipeDetails: PropTypes.func.isRequired,
 };
