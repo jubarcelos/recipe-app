@@ -17,16 +17,6 @@ function DrinkDetails({
   renderRecipeDetails }) {
   const { id } = useParams();
   const [copiedLink, setCopiedLink] = useState('');
-  // const clearRecipe = {
-  //   id: '',
-  //   type: '',
-  //   nationality: '',
-  //   category: '',
-  //   alcoholicOrNot: '',
-  //   name: '',
-  //   image: '',
-  // };
-
   const whiteHeart = (
     <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
   );
@@ -38,12 +28,17 @@ function DrinkDetails({
     return setCopiedLink('copied');
   };
 
-  const [isFavorite, setIsFavorite] = useState();
+  const [isFavorite, setIsFavorite] = useState(false);
   const { idDrink, strCategory, strAlcoholic, strDrink,
     strDrinkThumb } = actualRecipe;
-  const [favoriteRecipe, setFavoriteRecipe] = useState();
-  const setFavoriteRecipesInfo = () => (
-    setFavoriteRecipe({
+
+  useEffect(() => {
+    setIsFavorite(getLocalStorageFavorites().some((recipe) => recipe.id === id));
+    return setIsFavorite(false);
+  }, [id]);
+
+  const handleFavoriteClick = () => {
+    const favoriteRecipe = {
       id: idDrink,
       type: 'drink',
       nationality: '',
@@ -51,25 +46,14 @@ function DrinkDetails({
       alcoholicOrNot: strAlcoholic,
       name: strDrink,
       image: strDrinkThumb,
-    })
-  );
-
-  useEffect(() => {
-    if (localStorage.getItem('favoriteRecipes')
-      && localStorage.getItem('favoriteRecipes') !== []) {
-      return setIsFavorite(getLocalStorageFavorites().some((recipe) => recipe.id === id));
-    }
-    return setIsFavorite(false);
-  }, [id]);
-
-  const handleFavoriteClick = () => {
-    setFavoriteRecipesInfo();
+    };
     if (isFavorite === false) {
       setLocalStorageFavorites(favoriteRecipe);
-      return setIsFavorite(true);
+      setIsFavorite(true);
+    } else {
+      removeLocalStorageFavorites(favoriteRecipe);
+      setIsFavorite(false);
     }
-    removeLocalStorageFavorites(favoriteRecipe);
-    setIsFavorite(false);
   };
 
   return (
