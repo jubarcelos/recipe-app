@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { drinkContext } from '.';
+import getDrinkIngredients from '../services/getDrinkIngredients';
 
 function DrinksProvider({ children }) {
   const [drinkRecipes, setDrinkRecipes] = useState([]);
   const [drinkCategories, setDrinkCategories] = useState([]);
+  const [drinkIngredients, setDrinkIngredients] = useState([]);
 
   const setInitialRecipes = async () => {
     const firstRecipes = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
@@ -23,12 +25,27 @@ function DrinksProvider({ children }) {
     setDrinkCategories(fiveCategories);
   };
 
+  const setIngredients = async () => {
+    const ingredients = await getDrinkIngredients();
+    setDrinkIngredients(ingredients);
+  };
+
   useEffect(() => {
     setInitialRecipes();
     getCategories();
   }, []);
 
-  const value = { drinkRecipes, setDrinkRecipes, drinkCategories, setInitialRecipes };
+  useEffect(() => {
+    setIngredients();
+  }, []);
+
+  const value = {
+    drinkRecipes,
+    setDrinkRecipes,
+    drinkCategories,
+    setInitialRecipes,
+    drinkIngredients,
+  };
 
   return (
     <drinkContext.Provider value={ value }>

@@ -11,7 +11,6 @@ import DrinksExplore from '../pages/DrinksExplore';
 import FoodsExplore from '../pages/FoodsExplore';
 import DrinksIngredients from '../pages/DrinksIngredients';
 import FoodsIngredients from '../pages/FoodsIngredients';
-import DrinksNationalities from '../pages/DrinksNationalities';
 import FoodsNationalities from '../pages/FoodsNationalities';
 import Explore from '../pages/Explore';
 import FavoritesRecipes from '../pages/FavoritesRecipes';
@@ -42,11 +41,6 @@ function Routes() {
         exact
         path="/explore/foods/nationalities"
         component={ FoodsNationalities }
-      />
-      <Route
-        exact
-        path="/explore/drinks/nationalities"
-        component={ DrinksNationalities }
       />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoritesRecipes } />
