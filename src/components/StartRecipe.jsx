@@ -46,5 +46,3 @@ function StartRecipe() {
 }
 
 export default StartRecipe;
-
-// style = { display: none };
