@@ -6,8 +6,8 @@ import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
 import BlackHeartIcon from '../images/blackHeartIcon.svg';
 import {
-  setLocalStorageFavorites,
-  getLocalStorageFavorites,
+  appendRecipe,
+  getLocalStorageInfo,
   removeLocalStorageFavorites,
 } from '../services/localStorage';
 
@@ -15,25 +15,27 @@ function DrinkDetails({
   actualRecipe,
   ingredients,
   renderRecipeDetails }) {
-  const { id } = useParams();
   const [copiedLink, setCopiedLink] = useState('');
+
+  const handleShareClick = async () => {
+    await copy(window.location.href);
+    return setCopiedLink('copied');
+  };
+
+  const { id } = useParams();
   const whiteHeart = (
     <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
   );
   const blackHeart = (
     <img data-testid="favorite-btn" src={ BlackHeartIcon } alt="heart" />
   );
-  const handleShareClick = async () => {
-    await copy(window.location.href);
-    return setCopiedLink('copied');
-  };
-
   const [isFavorite, setIsFavorite] = useState(false);
   const { idDrink, strCategory, strAlcoholic, strDrink,
     strDrinkThumb } = actualRecipe;
 
   useEffect(() => {
-    setIsFavorite(getLocalStorageFavorites().some((recipe) => recipe.id === id));
+    setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+      .some((recipe) => recipe.id === id));
     return setIsFavorite(false);
   }, [id]);
 
@@ -48,7 +50,7 @@ function DrinkDetails({
       image: strDrinkThumb,
     };
     if (isFavorite === false) {
-      setLocalStorageFavorites(favoriteRecipe);
+      appendRecipe(favoriteRecipe, 'favoriteRecipes');
       setIsFavorite(true);
     } else {
       removeLocalStorageFavorites(favoriteRecipe);

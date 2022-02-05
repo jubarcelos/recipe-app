@@ -1,20 +1,62 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { useParams } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
+import BlackHeartIcon from '../images/blackHeartIcon.svg';
+import {
+  appendRecipe,
+  getLocalStorageInfo,
+  removeLocalStorageFavorites,
+} from '../services/localStorage';
 
 function FoodDetails({
   actualRecipe,
   renderRecipeDetails,
   ingredients }) {
-  const [copiedLink, setCopiedLink] = useState('');
   const cutVideoAddress = actualRecipe.strYoutube.split('watch?v=');
   const newVideoAddress = cutVideoAddress.join('embed/');
+  const [copiedLink, setCopiedLink] = useState('');
+
   const handleShareClick = async () => {
     await copy(window.location.href);
-    console.log(copiedLink, copy);
     return setCopiedLink('copied');
+  };
+  const { id } = useParams();
+  const whiteHeart = (
+    <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
+  );
+  const blackHeart = (
+    <img data-testid="favorite-btn" src={ BlackHeartIcon } alt="heart" />
+  );
+  const [isFavorite, setIsFavorite] = useState(false);
+  const { idDrink, strCategory, strAlcoholic, strDrink,
+    strDrinkThumb } = actualRecipe;
+
+  useEffect(() => {
+    setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+      .some((recipe) => recipe.id === id));
+    return setIsFavorite(false);
+  }, [id]);
+
+  const handleFavoriteClick = () => {
+    const favoriteRecipe = {
+      id: idDrink,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    };
+    if (isFavorite === false) {
+      appendRecipe(favoriteRecipe, 'favoriteRecipes');
+      setIsFavorite(true);
+    } else {
+      removeLocalStorageFavorites(favoriteRecipe);
+      setIsFavorite(false);
+    }
   };
 
   return (
@@ -35,10 +77,14 @@ function FoodDetails({
         >
           <img data-testid="share-btn" src={ ShareIcon } alt="share" />
         </button>
-        <button type="button">
-          <img data-testid="favorite-btn" src={ WhiteHeartIcon } alt="heart" />
+        <button
+          type="button"
+          onClick={ () => handleFavoriteClick() }
+
+        >
+          { isFavorite ? blackHeart : whiteHeart }
         </button>
-        { copiedLink && global.alert('Link copied!')}
+        { copiedLink && global.alert('Link copied!') }
       </div>
       <h3 data-testid="recipe-category">{ actualRecipe.strCategory }</h3>
       <h2>Instructions</h2>
