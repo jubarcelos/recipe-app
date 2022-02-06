@@ -17,5 +17,5 @@ export const getLocalStorageInfo = (item) => {
   if (arr) {
     return JSON.parse(arr);
   }
-  return arr;
+  return item === 'inProgressRecipes' ? { cocktails: [], meals: [] } : [];
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-// import { getInProgressRecipes, getDoneRecipes } from '../services/localStorage';
+// import { getLocalStorageInfo } from '../services/localStorage';
 
 function StartContinueRecipe() {
   const history = useHistory();
@@ -25,9 +25,9 @@ function StartContinueRecipe() {
       >
         Start Recipe
         {/* {
-          getInProgressRecipes().meals[iD] || getInProgressRecipes().drinks[iD]
+          getLocalStorageInfo('inProgressRecipes').meals[iD]
+            || getLocalStorageInfo('inProgressRecipes').drinks[iD]
             ? 'Continue Recipe' : 'Start Recipe'
-
         } */}
       </button>
     </div>
@@ -36,9 +36,10 @@ function StartContinueRecipe() {
   return (
     <div>
       {/* {
-        getDoneRecipes().some((recipe) => recipe.id === id) ? null : (
-          startProgressButton(id)
-        )
+        getLocalStorageInfo('doneRecipes').some((recipe) => recipe.id === id)
+          ? null : (
+            startProgressButton(id)
+          )
       } */}
       { startProgressButton(id) }
     </div>
