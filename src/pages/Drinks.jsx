@@ -74,6 +74,7 @@ function Drinks() {
             recipeImage={ drink.strDrinkThumb }
             recipeName={ drink.strDrink }
             index={ index }
+            id={ drink.idDrink }
           />
         ))
       }
