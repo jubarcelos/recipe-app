@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import getRecommendation from '../services/getRecommendation';
 import { userContext } from '../context';
+// nao apagar
 
 function Carrossel() {
   const [loading, setLoading] = useState(false);
