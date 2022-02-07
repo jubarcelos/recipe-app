@@ -15,8 +15,10 @@ function DetailsCard() {
   useEffect(() => {
     const selectRecipe = async () => {
       const selectedRecipe = await getRecipeById(pathname, id);
-      setActualRecipe(selectedRecipe[0]);
-      setIsLoading(true);
+      if (selectedRecipe.length > 0) {
+        setActualRecipe(selectedRecipe[0]);
+        return setIsLoading(true);
+      }
     };
     selectRecipe();
   }, [pathname, id]);

@@ -34,8 +34,8 @@ function Foods() {
       const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`);
       const result = await response.json();
       const ELEVEN = 11;
-      const twoelvRecipes = result.meals.filter((__, index) => index <= ELEVEN);
-      setFoodRecipes(twoelvRecipes);
+      const twelveRecipes = result.meals.filter((__, index) => index <= ELEVEN);
+      setFoodRecipes(twelveRecipes);
     } else {
       setInitialRecipes();
       setSelectedCategory('');
@@ -66,7 +66,6 @@ function Foods() {
           ))
         }
       </section>
-      <Footer />
       {
         foodRecipes.map((food, index) => (
           <Card
@@ -78,6 +77,7 @@ function Foods() {
           />
         ))
       }
+      <Footer />
     </div>
   );
 }
