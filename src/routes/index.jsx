@@ -11,12 +11,12 @@ import DrinksExplore from '../pages/DrinksExplore';
 import FoodsExplore from '../pages/FoodsExplore';
 import DrinksIngredients from '../pages/DrinksIngredients';
 import FoodsIngredients from '../pages/FoodsIngredients';
-import DrinksNationalities from '../pages/DrinksNationalities';
 import FoodsNationalities from '../pages/FoodsNationalities';
 import Explore from '../pages/Explore';
 import FavoritesRecipes from '../pages/FavoritesRecipes';
 import ProgressFood from '../pages/ProgressFood';
 import ProgressDrinks from '../pages/ProgressDrinks';
+import NotFound from '../pages/NotFound';
 
 function Routes() {
   return (
@@ -43,11 +43,6 @@ function Routes() {
         path="/explore/foods/nationalities"
         component={ FoodsNationalities }
       />
-      <Route
-        exact
-        path="/explore/drinks/nationalities"
-        component={ DrinksNationalities }
-      />
       <Route exact path="/done-recipes" component={ DoneRecipes } />
       <Route exact path="/favorite-recipes" component={ FavoritesRecipes } />
       <Route
@@ -69,6 +64,10 @@ function Routes() {
         exact
         path="/drinks/:id/in-progress"
         component={ ProgressDrinks }
+      />
+      <Route
+        path="*"
+        component={ NotFound }
       />
 
     </Switch>

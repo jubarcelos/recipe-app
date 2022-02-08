@@ -1,10 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { foodContext } from '.';
+import getNationalityOptions from '../services/getNationalityOptions';
+import getFoodIngredients from '../services/getFoodIngredients';
 
 function FoodsProvider({ children }) {
   const [foodRecipes, setFoodRecipes] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
+  const [ingredientsFoods, setIngredientsFoods] = useState([]);
+  const [nationalities, setNationalities] = useState([]);
+  const [recipesByNationality, setRecipesByNationality] = useState([]);
+
+  const setFirstRecipesByNationality = async () => {
+    const firstRecipes = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const JSON = await firstRecipes.json();
+    const ELEVEN = 11;
+    const twoelvRecipes = JSON.meals.filter((__, index) => index <= ELEVEN);
+    setRecipesByNationality(twoelvRecipes);
+  };
+
+  const getNationalities = async () => {
+    const allNationalities = await getNationalityOptions();
+    setNationalities(allNationalities);
+  };
 
   const setInitialRecipes = async () => {
     const firstRecipes = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
@@ -23,9 +41,26 @@ function FoodsProvider({ children }) {
     setFoodCategories(fiveCategories);
   };
 
+  const setIngredients = async () => {
+    const ingredients = await getFoodIngredients();
+    setIngredientsFoods(ingredients);
+  };
+
   useEffect(() => {
     setInitialRecipes();
     getCategories();
+  }, []);
+
+  useEffect(() => {
+    setIngredients();
+  }, []);
+
+  useEffect(() => {
+    getNationalities();
+  }, []);
+
+  useEffect(() => {
+    setFirstRecipesByNationality();
   }, []);
 
   const value = {
@@ -33,6 +68,10 @@ function FoodsProvider({ children }) {
     setFoodRecipes,
     foodCategories,
     setInitialRecipes,
+    ingredientsFoods,
+    nationalities,
+    recipesByNationality,
+    setRecipesByNationality,
   };
 
   return (
