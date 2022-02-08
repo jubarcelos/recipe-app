@@ -1,11 +1,19 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { userContext } from '.';
+import { userContext } from './index';
 
 function UserProvider({ children }) {
+  const [recommendations, setRecommendations] = useState([]);
   const [search, setSearch] = useState(false);
+  const value = {
+    recommendations,
+    setRecommendations,
+    search,
+    setSearch,
+  };
+
   return (
-    <userContext.Provider value={ { search, setSearch } }>
+    <userContext.Provider value={ value }>
       { children }
     </userContext.Provider>
   );

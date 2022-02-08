@@ -33,9 +33,6 @@ function DrinksProvider({ children }) {
   useEffect(() => {
     setInitialRecipes();
     getCategories();
-  }, []);
-
-  useEffect(() => {
     setIngredients();
   }, []);
 
