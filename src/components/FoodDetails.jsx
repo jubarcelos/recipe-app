@@ -53,7 +53,6 @@ function FoodDetails({
       name: strMeal,
       image: strMealThumb,
     };
-    console.log(favoriteRecipe);
     if (isFavorite === false) {
       appendRecipe(favoriteRecipe, 'favoriteRecipes');
       setIsFavorite(true);
