@@ -5,6 +5,7 @@ import { foodContext } from '.';
 function FoodsProvider({ children }) {
   const [foodRecipes, setFoodRecipes] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
+  const [ingrChecked, setIngrChecked] = useState({});
 
   const setInitialRecipes = async () => {
     const firstRecipes = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
@@ -33,6 +34,8 @@ function FoodsProvider({ children }) {
     setFoodRecipes,
     foodCategories,
     setInitialRecipes,
+    ingrChecked,
+    setIngrChecked,
   };
 
   return (
