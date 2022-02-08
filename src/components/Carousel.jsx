@@ -1,10 +1,25 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import getRecommendation from '../services/getRecommendation';
+import { makeStyles } from '@material-ui/core/styles';
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+// import GridListTileBar from '@material-ui/core/GridListTileBar';
 import { userContext } from '../context';
-// nao apagar
+import getRecommendation from '../services/getRecommendation';
 
 function Carrossel() {
+  const useStyles = makeStyles(() => ({
+    root: {
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'space-around',
+      overflow: 'hidden',
+    },
+    gridList: {
+      flexWrap: 'nowrap',
+    },
+  }));
+
   const [loading, setLoading] = useState(false);
   const { recommendations, setRecommendations } = useContext(userContext);
 
@@ -17,33 +32,56 @@ function Carrossel() {
       const FIVE = 5;
       const renderRecommendation = await getRecommendation(pathname, id);
       const sixRecipes = renderRecommendation.filter((_recipe, index) => index <= FIVE);
+      console.log(sixRecipes);
       setRecommendations(sixRecipes);
       setLoading(true);
     };
     recipeRecommendation();
   }, [pathname, id, setRecommendations]);
 
+  const classes = useStyles();
+
   const recommendationCard = (recipes) => (
-    recipes.map((recipe, index) => (
-      <div key={ index } data-testid={ `${index}-recomendation-card` }>
-        <img
-          data-testid={ `${index}-card-img` }
-          src={ recipe.strDrinkThumb ? recipe.strDrinkThumb : recipe.strMealThumb }
-          alt="recipeImage"
-          width="80"
-        />
-        <p
-          data-testid={ `${index}-recomendation-title` }
-        >
-          { recipe.strDrink ? recipe.strDrink : recipe.strMeal }
-        </p>
-      </div>
-    ))
-  );
+    <div className={ classes.root }>
+      <GridList
+        className={ classes.gridList }
+        cols={ 2 }
+      >
+        { recipes.map((recipe, index) => (
+          <GridListTile key={ index }>
+            <div key={ index } data-testid={ `${index}-recomendation-card` }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ recipe.strDrinkThumb ? recipe.strDrinkThumb : recipe.strMealThumb }
+                alt="recipeImage"
+                style={ { width: '120px' } }
+              />
+              <h3
+                data-testid={ `${index}-recomendation-title` }
+              >
+                { recipe.strDrink ? recipe.strDrink : recipe.strMeal }
+              </h3>
+              {/* { recipe.strDrink
+                ? (
+                  <GridListTileBar
+                    title={ recipe.strDrink }
+                    data-testid={ `${index}}-recomendation-title` }
+                  />
+                ) : (
+                  <GridListTileBar
+                    title={ recipe.strMeal }
+                    data-testid={ `${index}}-recomendation-title` }
+                  />
+                )} */}
+            </div>
+          </GridListTile>
+        )) }
+      </GridList>
+    </div>);
 
   return (
     <div>
-      <h1>Carrossel</h1>
+      <h2>Recommendation</h2>
       {
         loading && recommendationCard(recommendations)
       }
