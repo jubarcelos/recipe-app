@@ -54,7 +54,7 @@ function Carrossel() {
                 data-testid={ `${index}-card-img` }
                 src={ recipe.strDrinkThumb ? recipe.strDrinkThumb : recipe.strMealThumb }
                 alt="recipeImage"
-                style={ { width: '120px' } }
+                width="120px"
               />
               <h3
                 data-testid={ `${index}-recomendation-title` }
