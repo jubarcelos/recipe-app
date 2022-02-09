@@ -5,11 +5,15 @@ import { userContext } from './index';
 function UserProvider({ children }) {
   const [recommendations, setRecommendations] = useState([]);
   const [search, setSearch] = useState(false);
+  const [deletFavRecipe, setDeletFavRecipe] = useState(false);
+
   const value = {
     recommendations,
     setRecommendations,
     search,
     setSearch,
+    deletFavRecipe,
+    setDeletFavRecipe,
   };
 
   return (
