@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-// import { getLocalStorageInfo } from '../services/localStorage';
+import { getLocalStorageInfo } from '../services/localStorage';
 
 function StartContinueRecipe() {
   const history = useHistory();
@@ -45,11 +45,10 @@ function StartContinueRecipe() {
           redirectById(pathname, id);
         } }
       >
-        Start Recipe
         {
-          /* getLocalStorageInfo('inProgressRecipes').meals[id]
+          getLocalStorageInfo('inProgressRecipes').meals[id]
             || getLocalStorageInfo('inProgressRecipes').cocktails[id]
-            ? 'Continue Recipe' : 'Start Recipe' */
+            ? 'Continue Recipe' : 'Start Recipe'
         }
       </button>
     </div>

@@ -398,7 +398,7 @@ describe('51 - Desenvolva a lógica de favoritar e compartilhar, a lógica da te
           image: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
         },
       ];
-
+      console.log(favoriteRecipes)
       expect(favoriteRecipes).to.deep.eq(expectedFavoriteRecipes);
       localStorage.clear();
     });

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 import WhiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -9,7 +9,7 @@ import {
   getLocalStorageInfo,
   removeLocalStorageFavorites,
 } from '../services/localStorage';
-import Ingredients from '../components/Ingredients';
+import IngredientsFood from '../components/IngredientsFood';
 import { foodContext } from '../context';
 
 function ProgressFood() {
@@ -17,9 +17,10 @@ function ProgressFood() {
   const [ingredients, setIngredients] = useState([]);
   const [isFavorite, setIsFavorite] = useState(false);
   const [copiedLink, setCopiedLink] = useState('');
-  // const [firstAccess, setFirstAccess] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
   const { id } = useParams();
   const { ingrChecked, setIngrChecked } = useContext(foodContext);
+  const history = useHistory();
 
   const saveCheckedOnState = () => {
     if (ingrChecked === {}) {
@@ -63,20 +64,6 @@ function ProgressFood() {
     return setIsFavorite(false);
   }, [id]);
 
-  /* useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (progress.meals[id]) {
-      localStorage.setItem('inProgressRecipes', JSON.stringify({
-        cocktails: { ...progress.cocktails },
-        meals: { [id]: ingredientsInProgress } }));
-    }
-  }, [ingredientsInProgress, id]); */
-
-  /* useEffect(() => {
-    const progressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    setProgressStorage(progressLS);
-  }, [ingredientsInProgress]); */
-
   const handleFavoriteClick = () => {
     const favoriteRecipe = {
       id: recipeInProgress.idMeal,
@@ -96,31 +83,8 @@ function ProgressFood() {
     }
   };
 
-  /*   useEffect(() => {
-    const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      ...progress, meals: { ...progress.meals, [id]: [...progress.meals[id], ...inP] } }));
-  }, [ingredientsInProgress]); */
-
-  const handleIngredientCheckbox = ({ target }) => {
-    const progress = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (progress.meals[id].includes(target.name)) {
-      const newIngr = progress.meals[id].filter((ingr) => ingr !== target.name);
-      const newLS = {
-        cocktails: { ...progress.cocktails },
-        meals: { ...progress.meals, [id]: newIngr },
-      };
-      return localStorage.setItem('inProgressRecipes', JSON.stringify(newLS));
-    }
-    const newLS = {
-      cocktails: { ...progress.cocktails },
-      meals: { ...progress.meals, [id]: [...progress.meals[id], target.name] },
-    };
-    return localStorage.setItem('inProgressRecipes', JSON.stringify(newLS));
-  };
-
   const handleShareClick = async () => {
-    await copy(window.location.href);
+    await copy(`http://localhost:3000/foods/${id}`);
     return setCopiedLink('copied');
   };
   const whiteHeart = (
@@ -163,11 +127,19 @@ function ProgressFood() {
         { recipeInProgress.strInstructions }
       </p>
       <h2>Ingredients</h2>
-      <Ingredients
+      <IngredientsFood
         ingredients={ ingredients }
-        handleIngredientCheckbox={ handleIngredientCheckbox }
         id={ id }
+        setIsDisabled={ setIsDisabled }
       />
+      <button
+        type="button"
+        disabled={ isDisabled }
+        onClick={ () => history.push('/done-recipes') }
+        data-testid="finish-recipe-btn"
+      >
+        Finish Recipe
+      </button>
     </div>);
 }
 
