@@ -7,6 +7,7 @@ import getFoodIngredients from '../services/getFoodIngredients';
 function FoodsProvider({ children }) {
   const [foodRecipes, setFoodRecipes] = useState([]);
   const [foodCategories, setFoodCategories] = useState([]);
+  const [ingrChecked, setIngrChecked] = useState({});
   const [ingredientsFoods, setIngredientsFoods] = useState([]);
   const [nationalities, setNationalities] = useState([]);
   const [recipesByNationality, setRecipesByNationality] = useState([]);
@@ -68,6 +69,8 @@ function FoodsProvider({ children }) {
     setFoodRecipes,
     foodCategories,
     setInitialRecipes,
+    ingrChecked,
+    setIngrChecked,
     ingredientsFoods,
     nationalities,
     recipesByNationality,
