@@ -32,7 +32,6 @@ function Carrossel() {
       const FIVE = 5;
       const renderRecommendation = await getRecommendation(pathname, id);
       const sixRecipes = renderRecommendation.filter((_recipe, index) => index <= FIVE);
-      console.log(sixRecipes);
       setRecommendations(sixRecipes);
       setLoading(true);
     };

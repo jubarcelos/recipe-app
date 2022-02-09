@@ -14,8 +14,8 @@ function FoodsNationalities() {
       const firstRecipes = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
       const JSON = await firstRecipes.json();
       const ELEVEN = 11;
-      const twoelvRecipes = JSON.meals.filter((__, index) => index <= ELEVEN);
-      return setRecipesByNationality(twoelvRecipes);
+      const twelveRecipes = JSON.meals.filter((__, index) => index <= ELEVEN);
+      return setRecipesByNationality(twelveRecipes);
     }
     const recipes = await getRecipesByNationality(target.value);
     setRecipesByNationality(recipes);
@@ -50,6 +50,8 @@ function FoodsNationalities() {
               recipeImage={ recipe.strMealThumb }
               recipeName={ recipe.strMeal }
               index={ index }
+              id={ recipe.idMeal }
+              type="food"
             />
           ))
         }
