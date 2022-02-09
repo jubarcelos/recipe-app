@@ -8,7 +8,7 @@ function Profile() {
   const user = JSON.parse(localStorage.getItem('user'));
 
   const handleClick = () => {
-    history.push('/');
+    history.push('/profile');
     localStorage.clear();
   };
 
