@@ -1,6 +1,6 @@
 import React from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { getLocalStorageInfo } from '../services/localStorage';
+// import { getLocalStorageInfo } from '../services/localStorage';
 
 function StartContinueRecipe() {
   const history = useHistory();
@@ -16,9 +16,18 @@ function StartContinueRecipe() {
     }
   };
 
+  const handleStartContinueButton = () => {
+    const localStorageKey = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if ((localStorageKey.meals[id] && localStorageKey !== null)
+    || (localStorageKey.cocktails[id] && localStorageKey !== null)) {
+      return 'Continue Recipe';
+    }
+    return 'Start Recipe';
+  };
+
   const saveRecipeInProgress = () => {
     const inProgressLS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (pathname === `/foods/${id}`) {
+    if (pathname === `/foods/${id}` && inProgressLS !== null) {
       const newRecipe = {
         cocktails: { ...inProgressLS.cocktails },
         meals: { [id]: inProgressLS.meals[id] !== undefined
@@ -27,11 +36,13 @@ function StartContinueRecipe() {
       };
       return localStorage.setItem('inProgressRecipes', JSON.stringify(newRecipe));
     }
-    const newRecipe = {
-      cocktails: { ...inProgressLS.cocktails, [id]: [] },
-      meals: { ...inProgressLS.meals },
-    };
-    return localStorage.setItem('inProgressRecipes', JSON.stringify(newRecipe));
+    if (inProgressLS !== null) {
+      const newRecipe = {
+        cocktails: { ...inProgressLS.cocktails, [id]: [] },
+        meals: { ...inProgressLS.meals },
+      };
+      return localStorage.setItem('inProgressRecipes', JSON.stringify(newRecipe));
+    }
   };
 
   const startProgressButton = () => (
@@ -45,11 +56,13 @@ function StartContinueRecipe() {
           redirectById(pathname, id);
         } }
       >
-        {
-          getLocalStorageInfo('inProgressRecipes').meals[id]
-            || getLocalStorageInfo('inProgressRecipes').cocktails[id]
-            ? 'Continue Recipe' : 'Start Recipe'
-        }
+        { JSON.parse(localStorage.getItem('inProgressRecipes')) !== null
+            && JSON.parse(localStorage.getItem('inProgressRecipes')).meals !== undefined
+            && JSON.parse(localStorage.getItem('inProgressRecipes'))
+              .cocktails !== undefined
+              && JSON.parse(localStorage.getItem('inProgressRecipes'))
+                .cocktails !== null
+          ? handleStartContinueButton() : null}
       </button>
     </div>
   );
