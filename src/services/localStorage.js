@@ -17,5 +17,6 @@ export const getLocalStorageInfo = (item) => {
   if (arr) {
     return JSON.parse(arr);
   }
-  return item === 'inProgressRecipes' ? { cocktails, meals } : [];
+  localStorage.setItem(item, JSON.stringify([]));
+  return [];
 };
