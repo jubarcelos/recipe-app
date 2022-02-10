@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import ShareIcon from '../images/shareIcon.svg';
 
-function ShareDoneRecipe(recipe) {
+function ShareDoneRecipe({ recipe, index }) {
   const [copiedLink, setCopiedLink] = useState(false);
   const url = 'http://localhost:3000';
   const { type, id } = recipe;
@@ -16,11 +16,14 @@ function ShareDoneRecipe(recipe) {
   return (
     <div>
       <button
-        data-testid={ `${index}-horizontal-share-btn` }
         type="button"
         onClick={ () => handleShareClick() }
       >
-        <img data-testid="share-btn" src={ ShareIcon } alt="share" />
+        <img
+          data-testid={ `${index}-horizontal-share-btn` }
+          src={ ShareIcon }
+          alt="share"
+        />
       </button>
       { copiedLink && <p>Link copied!</p> }
 
@@ -31,7 +34,7 @@ function ShareDoneRecipe(recipe) {
 export default ShareDoneRecipe;
 
 ShareDoneRecipe.propTypes = {
-  // index: PropTypes.number.isRequired,
+  index: PropTypes.number.isRequired,
   recipe: PropTypes.shape({
     id: PropTypes.number,
     type: PropTypes.string,
