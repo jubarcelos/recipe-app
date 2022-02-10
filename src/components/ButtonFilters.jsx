@@ -1,27 +1,30 @@
 import React from 'react';
-import CardDone from './CardDone';
+import PropTypes from 'prop-types';
 
-function ButtonFilters() {
+function ButtonFilters({ allRecipes, setActualFiltered }) {
+  const filteredFood = allRecipes.filter((recipes) => recipes.type === 'food');
+  const filteredDrink = allRecipes.filter((recipes) => recipes.type === 'drink');
+
   return (
     <div>
       <button
         type="button"
         data-testid="filter-by-all-btn"
-        onClick={ () => <CardDone allDoneRecipes={ allDoneRecipes } /> }
+        onClick={ () => setActualFiltered(allRecipes) }
       >
         All
       </button>
       <button
         type="button"
         data-testid="filter-by-food-btn"
-        onClick={ () => allDoneRecipes.filter((recipes) => recipes.type === 'food') }
+        onClick={ () => setActualFiltered(filteredFood) }
       >
         Food
       </button>
       <button
         type="button"
         data-testid="filter-by-drink-btn"
-        onClick={ () => allDoneRecipes.filter((recipes) => recipes.type === 'drink') }
+        onClick={ () => setActualFiltered(filteredDrink) }
       >
         Drinks
       </button>
@@ -30,3 +33,8 @@ function ButtonFilters() {
 }
 
 export default ButtonFilters;
+
+ButtonFilters.propTypes = {
+  allRecipes: PropTypes.arrayOf(PropTypes.any).isRequired,
+  setActualFiltered: PropTypes.func.isRequired,
+};
