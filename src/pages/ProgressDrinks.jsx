@@ -83,6 +83,30 @@ function ProgressDrinks() {
     }
   };
 
+  const handleDoneClick = () => {
+    const newTag = recipeInProgress.strTags !== null
+      && recipeInProgress.strTags.split(',');
+    const data = new Date();
+    const day = String(data.getDate()).padStart(2, '0');
+    const month = String(data.getMonth() + 1).padStart(2, '0');
+    const year = data.getFullYear();
+    const actualDate = `${day}/${month}/${year}`;
+    const doneRecipe = {
+      id: recipeInProgress.idDrink,
+      type: 'drink',
+      nationality: '',
+      category: recipeInProgress.strCategory,
+      alcoholicOrNot: recipeInProgress.strAlcoholic,
+      name: recipeInProgress.strDrink,
+      image: recipeInProgress.strDrinkThumb,
+      doneDate: actualDate,
+      tags: newTag,
+    };
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    return localStorage.setItem('doneRecipes', JSON.stringify([
+      ...doneRecipes, doneRecipe]));
+  };
+
   const handleShareClick = async () => {
     await copy(`http://localhost:3000/drinks/${id}`);
     return setCopiedLink('copied');
@@ -135,8 +159,11 @@ function ProgressDrinks() {
       <button
         type="button"
         disabled={ isDisabled }
-        onClick={ () => history.push('/done-recipes') }
         data-testid="finish-recipe-btn"
+        onClick={ () => {
+          history.push('/done-recipes');
+          handleDoneClick();
+        } }
       >
         Finish Recipe
       </button>

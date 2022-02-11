@@ -15,11 +15,11 @@ function DrinkDetails({
   actualRecipe,
   ingredients,
   renderRecipeDetails }) {
-  const [copiedLink, setCopiedLink] = useState('');
+  const [copiedLink, setCopiedLink] = useState(false);
 
   const handleShareClick = async () => {
     await copy(window.location.href);
-    return setCopiedLink('copied');
+    return setCopiedLink(true);
   };
 
   const { id } = useParams();

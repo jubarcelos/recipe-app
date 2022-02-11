@@ -6,9 +6,7 @@ function Card({ index, recipeImage, recipeName, id, type }) {
   return (
     <div>
       <Link
-        to={ {
-          pathname: `/${type}s/${id}`,
-        } }
+        to={ { pathname: `/${type}s/${id}` } }
         data-testid={ `${index}-recipe-card` }
       >
         <img

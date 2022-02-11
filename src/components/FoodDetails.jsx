@@ -83,7 +83,6 @@ function FoodDetails({
         <button
           type="button"
           onClick={ () => handleFavoriteClick() }
-
         >
           { isFavorite ? blackHeart : whiteHeart }
         </button>

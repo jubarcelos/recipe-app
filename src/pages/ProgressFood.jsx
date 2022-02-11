@@ -83,6 +83,30 @@ function ProgressFood() {
     }
   };
 
+  const handleDoneClick = () => {
+    const newTag = recipeInProgress.strTags !== null
+      && recipeInProgress.strTags.split(',');
+    const data = new Date();
+    const day = String(data.getDate()).padStart(2, '0');
+    const month = String(data.getMonth() + 1).padStart(2, '0');
+    const year = data.getFullYear();
+    const actualDate = `${day}/${month}/${year}`;
+    const doneRecipe = {
+      id: recipeInProgress.idMeal,
+      type: 'food',
+      nationality: recipeInProgress.strArea,
+      category: recipeInProgress.strCategory,
+      alcoholicOrNot: '',
+      name: recipeInProgress.strMeal,
+      image: recipeInProgress.strMealThumb,
+      doneDate: actualDate,
+      tags: newTag,
+    };
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes'));
+    return localStorage.setItem('doneRecipes', JSON.stringify([
+      ...doneRecipes, doneRecipe]));
+  };
+
   const handleShareClick = async () => {
     await copy(`http://localhost:3000/foods/${id}`);
     return setCopiedLink('copied');
@@ -134,9 +158,12 @@ function ProgressFood() {
       />
       <button
         type="button"
-        disabled={ isDisabled }
-        onClick={ () => history.push('/done-recipes') }
         data-testid="finish-recipe-btn"
+        disabled={ isDisabled }
+        onClick={ () => {
+          history.push('/done-recipes');
+          handleDoneClick();
+        } }
       >
         Finish Recipe
       </button>

@@ -74,6 +74,7 @@ function Foods() {
             recipeName={ food.strMeal }
             index={ index }
             id={ food.idMeal }
+            type="food"
           />
         ))
       }
